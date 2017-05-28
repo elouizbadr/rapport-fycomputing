@@ -223,6 +223,59 @@ Les actions de FY COMPUTING sont focalisées sur ce qui est le plus important po
 
 \newpage
 
+Au sein de l’Entreprise, généralement l'équipe de développement des applications est chargée d’exécuter les missions suivantes : Réaliser une étude des besoins fonctionnels pour élaborer un cahier des charges de l’applications à développer, puis concevoir la partie technique du projet pour ensuite la traduire en code source, ce dernier doît être testé avant la phase de déploiement.
+\newline
+
+Le code source développé par l’équipe de développement est souvent testé dans plusieurs environnements avant de le mettre en production; en local, puis en environnement de tests, et enfin dans un environnement de pré-production. Si les test dans un environnement donné sont passés avec succès, l'équipe de développement met le code à la disposition de l’équipe de l’exploitation pour l’exploiter dans l’environnement suivant.
+\newline
+
+Ce paradigme pose un problème : lorsque les deux équipes travaillent séparément, le développeur peut ne pas être au courant des obstacles opérationnels qui empêchent le programme de fonctionner comme attendu.
+\newline
+
+Ce cloisonnement entre les équipes a un impact non négligeable sur le business :
+\begin{itemize}
+\item Des applications qui ne fonctionnent pas en production malgré les tests.
+\item Une durée de déploiement trop importante.
+\item Un « Time To Market » trop important.
+\item Une impossibilité de livrer rapidement en production un correctif de bug.
+\item Des difficultés à gérer l’ensemble des configurations.
+\item Des retards de livraisons.
+\item Des problèmes de performance des applications.
+\item Des difficultés à augmenter rapidement la capacité d’une application.
+\newline
+\end{itemize}
+
+Alors pour remédier ce problème, on cherche à fusionner le développement et le déploiement au sein d'un exercice plus rationalisé, c’est ainsi que le mot ‘DevOps’ a apparu pour décrire cette fusion.
+\newline
+
+Pour réussir un bon DevOps, il faut également des outils technologiques qui interviennent dans les phases de développement des applications informatiques :
+
+\begin{itemize}
+\item \textbf {Gestion du développement :} la production du code s’effectue avec des outils propres aux développeurs :
+\begin{itemize}
+\item un IDE (environnement de développement intégré) comme Eclipse, WebStorm, Android Studio, Visual Studio, …).
+\item un framework de développement (AngularJS, Ruby on Rails,  NodeJS, …).
+\item un outil de requêtage SQL (SQLDevelopper, Toad, …). 
+\end{itemize}
+
+\item \textbf {Gestion du stockage du code :} le code doit être poussé sur dépôt central permettant la mutualisation entre les développeurs d’une même équipe. Des outils comme Git, GitLab, GitHub, Bitbucket, CVS, Subversion ou Mercurial peuvent ainsi être utilisés.
+
+
+\item \textbf {Gestion de l’intégration continue (CI) :} Le code doit générer automatiquement des builds à l’aide d’un gestionnaire d’intégration continue comme Jenkins (fork de Hudson), TeamCity, CruiseControl, ...
+
+
+\item \textbf {Gestion des tests :} les tests unitaires ont des outils de la famille xUnit comme Junit (monde Java), JSUnit, PyUnit, etc. Les tests métiers disposent d’outils comme Selenium, Behat, etc. D’autres types de tests doivent être effectués comme les tests de sécurité (OWASP, etc.), les tests de performances (JavaMelody, outils d’APM, JMeter, etc.).
+\newline
+
+D’autres outils complètent la panoplie et permettent d’augmenter l’automatisation et ainsi d’améliorer la productivité :
+
+\item Les plateformes IaaS (Amazon AWS, Google App Engine, Mirosoft Azure, etc.) qui vont permettre de provisionner en automatiques les machines virtuelles (VMs) nécessaires au fonctionnement de l’application.
+\item Les gestionnaires de configuration (Puppet et Chef, Ansible).
+\item Les gestionnaires de containerisation (Docker).
+\end{itemize}
+
+\newpage
+
 \chapter{Technologies Utilisées}
 
 \newpage
