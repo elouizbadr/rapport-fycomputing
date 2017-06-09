@@ -334,7 +334,7 @@ De plus, l'objectif essentiel d'un Conteneur est de rendre une application compl
 \subsubsection{Introduction à Docker}
 
 En réalité, la Conteneurisation existe depuis longtemps sur les systèmes UNIX/Linux sous plusieurs formes ; chroot, jail. Après la création de la technologies open source de conteneurisation OpenVZ (anciennement Virtuozzo) par Parallels Inc. et LXC (Linux Containers) par Google .. et autres, Docker a apporté la pièce manquante de la solution mature et complète en 2013.
-\newline
+\renewcommand{\appendixtocname}{Annexes}
 
 Docker fournit un ensemble de produits et services à savoir :
 \begin{itemize}
@@ -620,14 +620,138 @@ sudo chmod +x ./install_docker_debian.sh && sudo ./install_docker_debian.sh
 \newpage
 
 \section{Installation et Configuration de MongoDB}
+Malgré qu'Ubuntu fournit ces propres paquetages d'installation MongoDB, il est souvent recommandé d'installer MongoDB depuis ses paquetages officiels, qui sont en général à jour. MongoDB fournit seulement les paquetges d'installation pour la version 64 bits d'Ubuntu LTS, qui peuvent marcher bien avec les autres version non-LTS mais ils ne sont pas supportés.
+\newline
+
+MongoDB fournit ses paquetages officiels suivant dans son propre répertoire :
+\begin{itemize}
+  \item{\textbf{mongodb-org} : Un meta-paquetage qui installe automatiquement les quatres paquetages ci-dessous.} 
+  \item{\textbf{mongodb-org-server} : Contient le démon \textbf{mongod} et ses fichiers de configuration et de démarrage.} 
+  \item{\textbf{mongodb-org-mongos} : Contient le démon \textbf{mongos}.} 
+  \item{\textbf{mongodb-org-shell} : Contient le shell \textbf{mongo}.} 
+  \item{\textbf{mongodb-org-tools} : Contient d'autres outils d'administration MongoDB.} 
+  \newline
+\end{itemize}
+
+
+Les paquetages ci-dessus entrent en conflit avec les paquetages \textbf{mongodb, mongodb-server} et \textbf{mongodb-clients} fournit par Ubuntu. 
+\newline
+
+Le fichier de configuration par défaut de MongoDB \textbf{/etc/mongod.conf} contient le paramètre \textbf{bind\_ip 127.0.0.1} par défaut, ce qu'oblige le démon \texttt{mongod} à servir seulement les requêtes qui proviennent de la machine locale. Pour servir autres clients dans le réseau si vous voulez, il faut changez l'adreese configurée vers une des interfaces réseau configurées de la machine, ou \textbf{*} pour utiliser toutes les interfaces réseau disponibles.
+\newline
+
+Alors, afin d'installer MongoDB sur Ubuntu 16.04 LTS, il faut suivre les étapes suivantes :
+\begin{enumerate}
+  \item{Importer la Clé Publique GPG Utilisée par APT}
+  \begin{minted}{shell}
+  sudo apt-key adv \
+    --keyserver hkp://keyserver.ubuntu.com:80 
+    --recv 0C49F3730359A14518585931BC711F9BA15703C6
+  \end{minted}
+
+  \item{Créer un fichier \texttt{list} pour APT}
+  \begin{minted}{shell}
+  echo "deb [ arch=amd64,arm64 ] \ 
+    http://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/3.4 multiverse" | \ 
+    sudo tee /etc/apt/sources.list.d/mongodb-org-3.4.list
+  \end{minted}
+
+  \item{Mettre à jour la base de données APT}
+  \begin{minted}{shell}
+  sudo apt-get update
+  \end{minted}
+
+  \item{Installer les paquetages de MongoDB}
+  \begin{minted}{shell}
+  sudo apt-get install -y mongodb-org
+  \end{minted}
+
+  \item{Lancer le Serveur MongoDB}
+  \begin{minted}{shell}
+  sudo service mongod start
+  \end{minted}
+\end{enumerate}
 
 \newpage
 
-\section{Installation et Configuration de NodeJS}
+\section{Installation de NodeJS}
 
+NodeJS pour Debian et Ubuntu est fournit par le répertoire \texttt{NodeSource}. NodeJS peut être installé sur Ubuntu 12.04 LTS (les deux architectures) ou ultérieure. La politique de distribution des versions de NodeJS est similaire à Ubuntu, avec une version LTS supportée pour une longue durée, et autres versions de développement de temps en temps. A la date d'écriture de ce document, la version LTS de NodeJS était 6.X, donc c'est la version qu'on va installer par la suite.
+\newline
+
+\texttt{NodeSource} fournit un script Shell qui facilite la tâche d'installation, donc on l'importe puis l'exécute à l'aide de la comande suivante :
+  \begin{minted}{shell}
+  curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
+  \end{minted}
+
+Enfin, il suffit d'installer le paquetage \texttt{nodejs} avec APT :
+  \begin{minted}{shell}
+  sudo apt-get install -y nodejs
+  \end{minted}
+
+Pour vérifier le bon fonctionnement de NodeJS, vérifiez sa version avec :
+  \begin{minted}{shell}
+  node --version
+  \end{minted}
 \newpage
 
-\section{Installation des Modules ExpressJS et AngularJS}
+\section{Installation d'ExpressJS et d'AngularJS}
+
+\subsection{Installation d'ExpressJS}
+Supposons qu'on a déjà installé NodeJS, on crée le dossier de notre projet d'application :
+  \begin{minted}{shell}
+  mkdir mon-projet-mean
+  cd mon-projet-mean
+  \end{minted}
+
+Ensuite, à l'aide du \texttt{npm}, le gestionnaire des modules NodeJS, on crée le fichier \texttt{\emph{package.json}} qui va contenir les métadonnées sur notre projet et ses dépendances :
+  \begin{minted}{shell}
+  npm init
+  \end{minted}
+La commande ci-dessus va poser plusieurs questions à propos du projet, pour simplifier la vie, on ira avec les réponses fournies par défaut.
+
+Pour installer le module ExpressJS, il suffit de lance la commande suivante :
+  \begin{minted}{shell}
+  npm install express --save
+  \end{minted}
+L'option \texttt{``---save''} permet l'ajout de ce module à la liste des dépendances exprimées dans \texttt{\emph{package.json}}. Vous pouvez installer ExpressJS temporairement à l'aide de l'option \texttt{``---no-save''} ou globalement - disponible partout et pas seulement à ce projet - avec \texttt{``---global''}.
+
+\subsection{Installation d'AngularJS et Twitter Bootstrap}
+Les applications et sites Web sont développé à l'aide de plusieurs paquetages; frameworks, bibliothèques, outils ... etc. Garder la trace de tous ces paquetages et les gérer est une tâche difficile et prend beaucoup du temps, c'est pour cela qu'on a besoin d'un gestionnaire qui fait tout ça!
+
+\subsubsection{Bower: Gestionnaire des Paquetages pour le Web}
+Bower est un module NodeJS qui gère les dépendances pour le côté client des applications Web. Sa mission principale est d'installer les bonnes versions des paquetages et leurs dépendances dont on a besoin. Avant d'installer Bower, il faut avoir \texttt{NodeJS} et \texttt{git} déjà installés.
+\newline
+
+Bower est un outil basé sur la ligne des commandes qu'on peut installer avec :
+  \begin{minted}{shell}
+  npm install --global bower
+  \end{minted}
+
+Pour installer un paquetage, la commande \texttt{bower install} est utilisé. Cette dernière prends comme argument le nom du package, un raccourci GitHub, un répertoire Git, ou un lien URL direct. L'ajout de l'option \texttt{\emph{``---save''}} permet la sauvegarde de ce paquetage dans \texttt{\emph{bower.json}}.
+\newline
+
+Une autre méthode d'installation des paquetages Web avec Bower est à travers l'utilisation du fichier \texttt{\emph{bower.json}} qui contient la définition de ces paquetages. Si cette méthode est utilisée, lancez \texttt{bower install} dans le même dossier de \texttt{\emph{bower.json}}. 
+\newline
+
+Par défaut, Bower install les paquetages dans le dossier \texttt{\emph{bower\_components}}.
+
+\subsubsection{AngularJS et Twitter Bootstrap avec Bower}
+Pour notre projet d'application dans ce rapport, on a utilisé la version 1.x d'AngularJS. Au moment d'écriture de ce rapport, les créateurs d'AngularJS ont arrivée à la version 4.x sour le nom ``Angular'' (sans ``JS''). la version 1.x est complètement incompatible avec les versions 2.x ou ultérieures. Pour installer la dernière version d'AngularJS 1.x, son paquetage est nommé \texttt{\emph{angularjs}}.Les versions 2.x ou ultérieures d'Angular ne sont pas disponibles sur Bower.
+\newline
+
+Alors, l'installation d'AngularJS est simple avec Bower :
+  \begin{minted}{shell}
+  bower install --save angularjs
+  \end{minted}
+
+Bootstrap est un framework HTML, CSS et JS qui contient des composants Web prêts à utiliser dans le projet. Bootstrap facilite la phase d'estèthique et d'animation des applications et sites Web.
+\newline
+
+Pour installer Twitter Bootstrap avec Bower, il suffit d'exécuter :
+  \begin{minted}{shell}
+  bower install --save bootstrap
+  \end{minted}
 
 \end{appendices}
 
