@@ -296,6 +296,34 @@ D’autres outils complètent la panoplie et permettent d’augmenter l’automa
 \subsection{Culture DevOps}
 
 \subsection{Infrastructure as Code (IaC)}
+Cette partie discute le principe d'\texttt{IaC; Infrastructure as Code}\cite[Chapter~4]{thePracticeOfSystemAndNetworkAdministration} (en français ``\texttt{Infrastructure en tant que Code}''), une stratégie d'administration des systèmes dont l'infrastructure est provisionnée et gérée à travers des fichiers de configurations programmés au lieu du travail manuel. Cette méthode nous permet de gérer nos infrastructures en utilisant les même techniques de développement des applications comme les systèmes de contrôle des versions, tests unitaires, l'Intégration Continue et le Déploiement Continue (CI/CD). 
+\newline
+
+Avec le principe d'\texttt{IaC}, on effectue les changements aux systèmes en changeant les fichiers de code et de configuration utilisés, et non directement sur ces systèmes. Le code source utilisé pour décrire notre infrastructure représente notre environnement de travail, il décrit les machines, leurs programmes et applications, les connexions réseaux entre elles ... etc. On développe notre infrastructure la façon comment un développeur produit son application.
+\newline
+
+\texttt{IaC} n'est pas un systèmes ni un langage de programmation, c'est un principe et un méchanisme à suivre et implémenter à travers les outils disponibles pour cela; Puppet\cite{puppetWiki}, Chef\cite{chefWiki}, Docker (voir section \ref{docker}) ... etc.
+
+\subsubsection{Avantages d'Infratructure as Code}
+
+Par l'adoption de cette stratégie, on bénificie de trois avantages majeures :
+\begin{itemize}
+  \item\textbf{\emph{Coût réduit}} : Tout simplement parce que le travail manuel est presque éliminé. L'automatisation permet qu'une personne réalise les tâches de plusieurs, ce qui veut dire moins de personnes employées!
+  \item\textbf{\emph{Déploiement rapide}} : Les tâches sont exécutés de manière rapide et en parallèle. 
+  \item\textbf{\emph{Moins de risque}} : Moins de risque d'erreurs et bugs en suivant les techniques de développement informatique. Aussi, moins de risque de sécurité avec les différents types de tests automatisés.
+\end{itemize}
+
+\subsubsection{Principes d'Infratructure as Code}
+
+Les principes d'\texttt{IaC} sont les suivants :
+\begin{itemize}
+  \item\textbf{\emph{Tous les changements à travers les fichiers source de configuration}} : Ne pas se connecter aux serveurs pour effectuer les changements, il vaut mieux utiliser les fichiers du code et de configuration.
+  \item\textbf{\emph{La documentation à travers le code source}} : Les fichiers de documentation et ses illustrations doivent être générés à partir du code et des fichiers de configuration parce qu'ils sont la source fiable d'architecture de l'infrastructure.
+  \item\textbf{\emph{Utilisation d'un système de contrôle des versions}} : Tous les fichiers du code et de configuration doivent être contrôlés par un système de contrôle des versions pour garder l'historique des changements.
+  \item\textbf{\emph{Implémentation de l'Intégration / Déploiement Continue (CI/CD)}} : Exécutez les tests et le processus d'automatisation après chaque modification pour identifier les erreurs rapidement puis les corriger. 
+  \item\textbf{\emph{Un petit changement à la fois}} : Les erreurs sont simples à trouver lorsqu'elles résident dans un petit changement des fichiers. De même, les petits changements sont plus simple à déploier et/ou annuler que les grands changements.
+  \item\textbf{\emph{Le service est toujours disponible}} : Il vaut mieux appliquer des techniques pour garder le service offert disponible aux moments des mises à jour (exemples: la haute disponibilité, la tolérance aux pannes ...). Comme ça on peut effectuer des changement plus fréquemment sinon il sera difficile d'applique le principe précédent!
+\end{itemize}
 
 \subsection{Continuous Integration (CI)}
 
@@ -305,7 +333,7 @@ D’autres outils complètent la panoplie et permettent d’augmenter l’automa
 
 \section{Technologies Utilisées}
 
-\subsection{Docker}
+\subsection{Docker} \label{docker}
 Docker est un logiciel open source qui automatise le déploiement d'applications dans des Conteneurs logiciels. Ceci permet d'étendre la flexibilité et la portabilité d’exécution d'une application, que ce soit sur la machine locale, un cloud privé ou public, une machine nue, etc. 
 \newline
 
