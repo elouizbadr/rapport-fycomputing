@@ -494,20 +494,65 @@ Le MEAN\cite{gettingMEAN} Stack se compose de 4 technologies principales :
 
 
 MongoDB a été créé en 2007 et maintenu par MongoDB Inc., il était anciennement connu sous le nom 10gen.
+\newline
 
 ExpressJS est un projet open-source lancé en 2009 par T.J. Holowaychuck et considéré le framework web le plus populaire pour NodeJS.
+\newline
 
 AngularJS aussi un projet open-source supporté par Google, il est au marché depuis 2010 et très active en terme de développement et d'innovation.
+\newline
 
 NodeJS a été créé en 2009 et se base sur le moteur open-source de JavaScript V8 développé par Google.
 
 \subsubsection{MongoDB}
 
+La persistence des données est une phase indispensable dans le cycle de vie d'une application. Le choix de la base de données dans le MEAN Stack est tombé sur MongoDB, le 'M' dans ``MEAN''. En général, on est habitué au concept des lignes et colonnes dans les bases de données relationnelles, mais MongoDB n'est pas comme ça! MongoDB est un serveur open-source de bases de données orienté document\cite{documentDB} qui est très performant et évolutif.
+\newline
+
+Les \texttt{Documents} de MongoDB sont similaires aux objects \texttt{JSON - JavaScript Object Notation}\cite{json}, avec les valeurs des champs peuvent inclure d'autre documents, des tableaux, et des tableaux de documents. Les Documents - aussi connu sous le nom Objets - correspondent à des types de données natives dans plusieurs langages de programmation (comme JavaScript)ce qui reflète un point fort de ce type des bases de données. De plus, les Documents embarqués et les tableaux des Documents réduit le besoin d'effectuer des jointures coûteuses en terme de performance. MongoDB supporte les données semi-structurées, alors il offre de la polymorphisme à travers ses schémas de données dynamiques. Par contre, MongoDB n'est pas une base de données transactionnelle, et ne doit pas être utilisé pour cela\cite{mongoDBAndMySQLCompared}.
+\newline
+
+Mongoose est un module de modélisation des objets MongoDB pour NodeJS. Souvent les applications nécessite une modélisation de ces structures de données (et pas la base de données MongoDB elle-même!), donc Mongoose permet la définition d'un schéma de donnée dont on définit quel type de données peut être dans un Document, ou bien quelle donnée doit être dans ce Document ... etc. Plus que la modélisation, Mongoose fournit une toute couche entière de fonctionnalités au dessus de MongoDB, très utiles dans le développement des applications Web (Gestion des connexions à MongoDB, validation des données, lecture et écriture simple de Documents ... etc).\cite{mongooseDocs}
+
 \subsubsection{ExpressJS}
+
+Dans la création des serveurs et applications Web, il y a des tâches commune qui se répètent et on doit les faire à chaque fois. Express est un framework Web pour NodeJS créé pour ce genre de tâches. Sachant que NodeJS est un plateforme et non pas un serveur, Il nous donne la possibilité d'être créative dans la création de notre serveur Web mais un peu difficile pour développer un serveur Web simple. 
+\newline
+
+Express adresse cette difficulté en ajoutant une couche d'abstraction au-dessus de NodeJS pour créer un serveur Web qui écoute pour les requêtes et retourne les réponses adéquates. Parmi les avantages d'Express est sont API de routage Web, qui fournit une interface simple pour lier des addresses URL vers un morceau du code source qui peut soit retourner une page HTML, lire depuis une base de données, écrire dans la base de données ... etc. Ceci rend la taĉhe de créer cette même fonctionnalité avec NodeJS beaucoup plus rapide, simple et facile à maintenir.
 
 \subsubsection{AngularJS}
 
+En résumé, AngularJS est un framework JavaScript pour travailler avec les données directement dans le côté Client (i.e. Front End) et basé sur l'architecture \texttt{MVC}\cite{mvcArchitecture}. On peut développer une application Web complète juste avec les autres trois technologies MEAN, mais AngularJS nous permet de déplacer peu des traitements de données dans le côté Serveur vers le côté Client, souvent en laissant le programme du Serveur traite la communication avec la base de données.
+\newline
+
+AngularJS se base sur la liaison bidirectionnelle de données (en anglais \texttt{Two-Way Data Binding}) à l'opposée de la liaison unidirectionnelle de données qui est la méthode traditionnelle. Cette dernière est utilisée déjà lorsqu'on développe un projet avec MongoDB, NodeJS et Express seulement; NodeJS récupère les données depuis MongoDB puis Express utilise des modèles (en anglais \texttt{Templates}) pour compiler ces données en HTML délivré par la suite au Client [voir la figure \ref{fig:one-way-data-binding}]. Dans ce genre de liaison, la majorité du travail est effectué dans le côté Serveur. 
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=10cm]{one-way-data-binding.png}
+    \caption{Liaison unidirectionnelle de données dans le côté Serveur.}
+    \label{fig:one-way-data-binding}
+\end{figure}
+
+Par contre, la liaison bidirectionnelle des données est différente. \texttt{Template} et les données sont envoyées séparémment au client Web. Le client Web est maintenant responsable de compiler le \texttt{Template} en une vue HTML et les données en \texttt{Model}. La différence majeure est que la Vue est ``vivante'', cest-à-dire si le \texttt{Model} change, la \texttt{View} reflète ce changement instantanémment, et vice-versa [voir la figure \ref{fig:two-way-data-binding}].
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=11cm]{two-way-data-binding.png}
+    \caption{Liaison bidirectionnelle de données avec AngularJS dans le côté Client.}
+    \label{fig:two-way-data-binding}
+\end{figure}
+
 \subsubsection{NodeJS}
+
+NodeJS est la fondation du MEAN Stack. NodeJS est un environnement JavaScript de côté serveur qui est évènnementiel avec des requêtes d'entrée et de sortie non-bloquantes et basé sur le moteur JavaScript V8 de Google. En résumé, NodeJS nous permet de créer notre serveur Web avec nos applications web en top. Il n'est pas un langage ni un serveur Web lui-même, mais contient une bibliothèque de serveur HTTP, ce qui veut dire qu'on n'aura pas besoin d'avoir un serveur Web externe (Apache, Internet Information Services ``IIS'' ...) pour exécuter nos projets Web. Malgré que ceci nous donne un contrôle étendu sur la façon comment notre serveur Web fonctionne, mais il complique la tâche de sa création et son lancement rapide.
+\newline
+
+Un serveur Web créé par NodeJS est \texttt{``single-threaded''}, cest-à-dire tous les clients seront servi par un seul thread, le même thread. Cet approche est différent aux autres serveurs Web qui sont considérés \texttt{``multithreaded''} (comme Apache) qui affectent un thread pour chaque connexion d'un client. De plus, les évènnement d'entrée et de sortie pour NodeJS sont non-bloquants\cite{blockingVSnonBlocking}, ce qui permet à l'application web de ne pas se bloquer en attente des résponses aux requettes vers les ressources sur le système, et cela permet à NodeJS d'être beaucoup plus rapide\cite{nodeJSvsPHP}.
+\newline
+
+NPM est un gestionneur des modules installé avec NodeJS. Il nous donne la possibilité de télécharger des modules NodeJS pour étendre les fonctionnalités de nos applications. Au moment de la rédaction, NPM héberge presque demi-million de modules gratuitement ce qui montre combien de fonctionnalités prêtes à utiliser qui peuvent être ajoutées à nos applications NodeJS.
 
 \newpage
 
@@ -527,8 +572,10 @@ NodeJS a été créé en 2009 et se base sur le moteur open-source de JavaScript
 Jusqu'à maintenant, Docker ne peut s'installer que sur les systèmes 64 bits, c'est à dire que votre système Linux ou autres (Windows, macOS) doit être 64 bits. Pour les utilisateurs de Windows et macOS, ils peuvent installer Docker sur une VM de Linux ou sur leurs propre machine avec Docker for Windows et Docker for macOS. Dans cet annexe, je vais me focaliser dans les prochaines paragraphes sur les étapes d'installation de Docker Engine (CE) sur Ubuntu Server version 16.04 LTS.
 
 \section{Installation Manuelle}
-\subsection{Préparation des Dépendances}
 
+Cette partie montre les étapes détaillées d'installation de \texttt{Docker Engine} sur le système \texttt{Ubuntu Server}. La partie suivante donne la possibilité d'automatiser ces étapes pour une installation rapide et transparente.
+
+\subsection{Préparation des Dépendances}
 Comme la majorité des applications, Docker se base sur plusieurs dépendances applicatives qui doivent être installées au préalable pour son bon fonctionnement. D'après sa documentation\cite{dockerDocs} officielle, Docker a besoin de l'installation des dépendances suivantes :
 \usemintedstyle{vim}
 \begin{minted}{shell}
@@ -755,7 +802,7 @@ Pour installer Twitter Bootstrap avec Bower, il suffit d'exécuter :
 
 \end{appendices}
 
-\bibliographystyle{plain}
+\bibliographystyle{ieeetr}
 
 \bibliography{Bibl}
 
